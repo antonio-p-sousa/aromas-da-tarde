@@ -1,0 +1,16 @@
+# Credenciais e segredos — NUNCA commitar
+.env
+.env.*
+!.env.example
+
+# Node
+node_modules/
+dist/
+
+# Python
+.venv/
+__pycache__/
+
+# SO / editor
+.DS_Store
+Thumbs.db
