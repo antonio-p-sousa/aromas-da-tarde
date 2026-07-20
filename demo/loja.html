@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aromas da Tarde — Garrafeira Online (demo)</title>
+<style>
+  :root {
+    --ink: #16110b;
+    --ink-2: #1e1810;
+    --panel: #251d13;
+    --line: #3a2f1f;
+    --cream: #f3ead9;
+    --cream-dim: #b8a98d;
+    --gold: #c9a227;
+    --gold-soft: #e6c96a;
+    --red: #b3563e;
+    --serif: "Cormorant Garamond", Didot, "Playfair Display", Georgia, "Times New Roman", serif;
+    --sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--ink); color: var(--cream); font-family: var(--sans); }
+
+  /* ── Topbar ─────────────────────────────── */
+  .topbar {
+    display: flex; align-items: baseline; gap: 1.5rem; flex-wrap: wrap;
+    padding: 1.4rem clamp(1rem, 4vw, 3.5rem) 1.2rem;
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; background: rgba(22,17,11,.94); backdrop-filter: blur(8px); z-index: 20;
+  }
+  .brand { font-family: var(--serif); font-size: 1.7rem; letter-spacing: .12em; font-weight: 600; }
+  .brand em { font-style: normal; color: var(--gold); }
+  .brand small { display: block; font-family: var(--sans); font-size: .62rem; letter-spacing: .5em; color: var(--cream-dim); text-transform: uppercase; margin-top: .1rem; }
+  .search { margin-left: auto; position: relative; }
+  .search input {
+    background: var(--ink-2); border: 1px solid var(--line); border-radius: 2rem;
+    color: var(--cream); padding: .55rem 1.1rem .55rem 2.4rem; width: min(340px, 60vw);
+    font-size: .9rem; outline: none; transition: border-color .2s;
+  }
+  .search input:focus { border-color: var(--gold); }
+  .search svg { position: absolute; left: .9rem; top: 50%; transform: translateY(-50%); opacity: .5; }
+
+  /* ── Hero ───────────────────────────────── */
+  .hero { padding: clamp(2.5rem, 7vw, 5.5rem) clamp(1rem, 4vw, 3.5rem) 2.5rem; display: grid; grid-template-columns: minmax(0, 1.2fr) auto; gap: 2rem; align-items: end; border-bottom: 1px solid var(--line); background: radial-gradient(ellipse 80% 90% at 20% -10%, #2b2113 0%, var(--ink) 60%); }
+  .hero h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(2.4rem, 6vw, 4.6rem); line-height: 1.02; }
+  .hero h1 em { font-style: italic; color: var(--gold-soft); }
+  .hero p { margin-top: 1rem; color: var(--cream-dim); max-width: 46ch; font-size: .95rem; line-height: 1.6; }
+  .stats { display: flex; gap: 2.2rem; padding-bottom: .4rem; }
+  .stat b { display: block; font-family: var(--serif); font-size: 2.2rem; color: var(--gold-soft); font-weight: 600; }
+  .stat span { font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--cream-dim); }
+
+  /* ── Filtros ────────────────────────────── */
+  .toolbar { display: flex; gap: .5rem; align-items: center; padding: 1.1rem clamp(1rem, 4vw, 3.5rem); overflow-x: auto; scrollbar-width: thin; border-bottom: 1px solid var(--line); background: var(--ink); }
+  .chip {
+    flex: 0 0 auto; background: transparent; border: 1px solid var(--line); color: var(--cream-dim);
+    border-radius: 2rem; padding: .42rem 1rem; font-size: .78rem; letter-spacing: .06em; cursor: pointer; transition: all .18s;
+  }
+  .chip:hover { border-color: var(--gold); color: var(--cream); }
+  .chip.on { background: var(--gold); border-color: var(--gold); color: #241c0c; font-weight: 600; }
+  .toolbar select {
+    margin-left: auto; flex: 0 0 auto; background: var(--ink-2); color: var(--cream); border: 1px solid var(--line);
+    border-radius: 2rem; padding: .45rem .9rem; font-size: .8rem; outline: none; cursor: pointer;
+  }
+  .count { padding: 1rem clamp(1rem, 4vw, 3.5rem) 0; color: var(--cream-dim); font-size: .8rem; letter-spacing: .08em; }
+  .count b { color: var(--gold-soft); }
+
+  /* ── Grelha ─────────────────────────────── */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 1.1rem; padding: 1.2rem clamp(1rem, 4vw, 3.5rem) 3rem; }
+  .card {
+    background: linear-gradient(175deg, var(--panel) 0%, var(--ink-2) 100%);
+    border: 1px solid var(--line); border-radius: .6rem; padding: 1.2rem 1.1rem 1.1rem;
+    display: flex; flex-direction: column; gap: .6rem; position: relative; overflow: hidden;
+    transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+  }
+  .card:hover { transform: translateY(-4px); border-color: #57451f; box-shadow: 0 14px 34px -18px rgba(0,0,0,.9); }
+  .badges { position: absolute; top: .7rem; right: .7rem; display: flex; flex-direction: column; gap: .3rem; align-items: flex-end; }
+  .badge { font-size: .58rem; letter-spacing: .16em; text-transform: uppercase; padding: .22rem .55rem; border-radius: 2rem; font-weight: 700; }
+  .badge.novo { background: var(--gold); color: #241c0c; }
+  .badge.fest { background: #6d3550; color: #f6dce9; }
+  .badge.out  { background: transparent; border: 1px solid var(--red); color: var(--red); }
+  .bottle { height: 118px; display: flex; align-items: flex-end; justify-content: center; }
+  .fam { font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
+  .name { font-family: var(--serif); font-size: 1.06rem; line-height: 1.25; font-weight: 600; min-height: 2.6em; }
+  .foot { margin-top: auto; display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; border-top: 1px solid var(--line); padding-top: .7rem; }
+  .price { font-family: var(--serif); font-size: 1.35rem; color: var(--gold-soft); font-weight: 700; }
+  .price small { font-size: .6rem; color: var(--cream-dim); font-family: var(--sans); letter-spacing: .05em; margin-left: .25rem; }
+  .ref { font-size: .64rem; color: var(--cream-dim); letter-spacing: .08em; }
+  .more { display: block; margin: 0 auto 4rem; background: transparent; color: var(--gold); border: 1px solid var(--gold); border-radius: 2rem; padding: .8rem 2.6rem; font-size: .8rem; letter-spacing: .2em; text-transform: uppercase; cursor: pointer; transition: all .2s; }
+  .more:hover { background: var(--gold); color: #241c0c; }
+
+  footer { border-top: 1px solid var(--line); padding: 1.6rem clamp(1rem, 4vw, 3.5rem); display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; color: var(--cream-dim); font-size: .74rem; letter-spacing: .06em; }
+  footer b { color: var(--gold); }
+  .empty { grid-column: 1 / -1; text-align: center; padding: 4rem 1rem; color: var(--cream-dim); font-family: var(--serif); font-size: 1.4rem; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="brand">AROMAS <em>da</em> TARDE<small>Garrafeira Online</small></div>
+  <div class="search">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f3ead9" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="q" type="search" placeholder="Pesquisar entre 4 068 referências…" aria-label="Pesquisar produtos">
+  </div>
+</div>
+
+<section class="hero">
+  <div>
+    <h1>Os grandes destilados<br>do mundo, <em>à distância<br>de um clique</em>.</h1>
+    <p>Pré-visualização da futura loja online — construída com o catálogo real do PHC:
+    referências, famílias e preços com IVA tal como estão hoje no sistema de gestão.</p>
+  </div>
+  <div class="stats">
+    <div class="stat"><b id="st-prod">—</b><span>Produtos</span></div>
+    <div class="stat"><b id="st-fam">—</b><span>Famílias</span></div>
+    <div class="stat"><b>Diário</b><span>Sync PHC</span></div>
+  </div>
+</section>
+
+<nav class="toolbar" id="chips" aria-label="Filtrar por família"></nav>
+<div class="count" id="count"></div>
+<main class="grid" id="grid"></main>
+<button class="more" id="more" hidden>Mostrar mais</button>
+
+<footer>
+  <div><b>DEMO TÉCNICA · LOOP FUTURE</b> — dados reais extraídos do PHC CS em 20 jul 2026</div>
+  <div>Imagens dos produtos: a integrar (acesso aos ficheiros em curso junto da Expand Target)</div>
+</footer>
+
+<script src="products.js"></script>
+<script>
+  const P = window.PRODUCTS;
+  const PAGE = 48;
+  let fam = null, query = '', sort = 'name', shown = PAGE;
+
+  const famCounts = {};
+  P.forEach(p => famCounts[p.f] = (famCounts[p.f] || 0) + 1);
+  const fams = Object.keys(famCounts).sort((a, b) => famCounts[b] - famCounts[a]);
+
+  document.getElementById('st-prod').textContent = P.length.toLocaleString('pt-PT');
+  document.getElementById('st-fam').textContent = fams.length;
+
+  // paleta de garrafa por família (hash estável)
+  function famHue(f) { let h = 0; for (const c of f) h = (h * 31 + c.charCodeAt(0)) % 360; return h; }
+  function bottleSvg(p) {
+    const hue = famHue(p.f);
+    const liq = `hsl(${hue}, 38%, 34%)`, hi = `hsl(${hue}, 45%, 52%)`;
+    const dim = p.s <= 0 ? 'opacity:.35' : '';
+    return `<svg width="46" height="112" viewBox="0 0 46 112" style="${dim}">
+      <rect x="19" y="0" width="8" height="10" rx="1.5" fill="#8a734a"/>
+      <path d="M19 10 h8 v14 c0 4 9 8 9 18 v58 a8 8 0 0 1 -8 8 h-10 a8 8 0 0 1 -8 -8 v-58 c0 -10 9 -14 9 -18 z"
+            fill="${liq}" stroke="${hi}" stroke-width="1.2"/>
+      <rect x="13" y="56" width="20" height="26" rx="2" fill="#f3ead9" opacity=".14"/>
+      <path d="M14 30 c0 -6 6 -9 6 -13" stroke="#fff" stroke-width="2" opacity=".25" fill="none" stroke-linecap="round"/>
+    </svg>`;
+  }
+
+  function match(p) {
+    if (fam && p.f !== fam) return false;
+    if (!query) return true;
+    return (p.n + ' ' + p.c + ' ' + p.r).toLowerCase().includes(query);
+  }
+  function sorted(list) {
+    const l = [...list];
+    if (sort === 'price-asc') l.sort((a, b) => a.p - b.p);
+    else if (sort === 'price-desc') l.sort((a, b) => b.p - a.p);
+    else l.sort((a, b) => a.n.localeCompare(b.n, 'pt'));
+    return l;
+  }
+  const eur = v => v.toLocaleString('pt-PT', { style: 'currency', currency: 'EUR' });
+
+  function render() {
+    const all = sorted(P.filter(match));
+    const slice = all.slice(0, shown);
+    document.getElementById('count').innerHTML =
+      `<b>${all.length.toLocaleString('pt-PT')}</b> referência${all.length === 1 ? '' : 's'}` +
+      (fam ? ` em <b>${fam}</b>` : '') + (query ? ` para “${query}”` : '');
+    document.getElementById('grid').innerHTML = slice.length ? slice.map(p => `
+      <article class="card">
+        <div class="badges">
+          ${p.novo ? '<span class="badge novo">Novidade</span>' : ''}
+          ${p.fest ? '<span class="badge fest">Festivo</span>' : ''}
+          ${p.s <= 0 ? '<span class="badge out">Esgotado</span>' : ''}
+        </div>
+        <div class="bottle">${bottleSvg(p)}</div>
+        <div class="fam">${p.f}${p.c && p.c !== p.f ? ' · ' + p.c : ''}</div>
+        <h3 class="name">${p.n}</h3>
+        <div class="foot">
+          <div class="price">${eur(p.p)}<small>c/ IVA</small></div>
+          <div class="ref">${p.r}</div>
+        </div>
+      </article>`).join('')
+      : '<div class="empty">Nenhum produto encontrado.</div>';
+    document.getElementById('more').hidden = shown >= all.length;
+  }
+
+  const chipsEl = document.getElementById('chips');
+  chipsEl.innerHTML = `<button class="chip on" data-f="">Todas</button>` +
+    fams.map(f => `<button class="chip" data-f="${f}">${f} <span style="opacity:.55">${famCounts[f]}</span></button>`).join('') +
+    `<select id="sort" aria-label="Ordenar">
+       <option value="name">Nome A–Z</option>
+       <option value="price-asc">Preço ↑</option>
+       <option value="price-desc">Preço ↓</option>
+     </select>`;
+  chipsEl.addEventListener('click', e => {
+    const b = e.target.closest('.chip'); if (!b) return;
+    chipsEl.querySelectorAll('.chip').forEach(c => c.classList.remove('on'));
+    b.classList.add('on'); fam = b.dataset.f || null; shown = PAGE; render();
+  });
+  document.getElementById('sort').addEventListener('change', e => { sort = e.target.value; render(); });
+  document.getElementById('q').addEventListener('input', e => { query = e.target.value.trim().toLowerCase(); shown = PAGE; render(); });
+  document.getElementById('more').addEventListener('click', () => { shown += PAGE; render(); });
+
+  render();
+</script>
+</body>
+</html>

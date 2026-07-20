@@ -17,3 +17,6 @@ __pycache__/
 # SO / editor
 .DS_Store
 Thumbs.db
+
+# Dados embebidos da demo (gerados do catálogo real)
+demo/products.js
