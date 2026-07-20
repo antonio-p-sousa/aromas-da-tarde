@@ -3,6 +3,9 @@
 .env.*
 !.env.example
 
+# Dados do cliente (exports da BD real) — não versionar
+data/
+
 # Node
 node_modules/
 dist/
