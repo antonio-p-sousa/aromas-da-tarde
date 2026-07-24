@@ -14,8 +14,27 @@ Três nomes parecidos, três coisas diferentes:
 
 O cliente diz "Expand Target" para tudo — em reuniões e e-mails, confirmar sempre a que loja se referem antes de agir.
 
-- **Plano de integração:** [docs/plano-integracao.md](docs/plano-integracao.md)
-- **Decisões da reunião de arranque (16 jul 2026):** [docs/reuniao-2026-07-16-phc-expand.md](docs/reuniao-2026-07-16-phc-expand.md)
+## Estrutura do repositório
+
+```
+docs/
+├── entregaveis/   → DOCX atuais para cliente/parceiro (sem nomes pessoais)
+├── tecnico/       → documentação técnica interna (markdown)
+├── reunioes/      → atas e plano inicial
+└── arquivo/       → versões substituídas (mantidas para histórico)
+sql/               → consultas SQL de referência (leitura do PHC)
+scripts/           → utilitários (ligação SQL, só SELECT)
+demo/              → pré-visualização navegável da loja (dados reais, gitignored)
+data/              → exports do catálogo (gitignored — dados do cliente)
+```
+
+### Atalhos
+
+- **Entregáveis atuais:** [Ponto de situação](docs/entregaveis/Ponto-Situacao-Loja-Online-2026-07-24.docx) · [Requisitos para avançar](docs/entregaveis/Requisitos-Loja-Online-2026-07-24.docx)
+- **Plano de integração:** [docs/tecnico/plano-integracao.md](docs/tecnico/plano-integracao.md)
+- **Mapeamento PHC → Shopify:** [docs/tecnico/mapeamento-shopify.md](docs/tecnico/mapeamento-shopify.md)
+- **Exploração da base de dados:** [docs/tecnico/exploracao-bd.md](docs/tecnico/exploracao-bd.md)
+- **Reunião de arranque (16 jul 2026):** [docs/reunioes/2026-07-16-reuniao-phc.md](docs/reunioes/2026-07-16-reuniao-phc.md)
 - **Consultas SQL de referência:** [sql/](sql/)
 
 ## Setup

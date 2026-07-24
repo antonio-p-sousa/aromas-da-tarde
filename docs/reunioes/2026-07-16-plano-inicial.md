@@ -1,6 +1,6 @@
 # Integração PHC CS ↔ Shopify — Plano técnico inicial (16 jul 2026)
 
-> **HISTÓRICO** — primeiro plano, escrito logo após a reunião de 16/07, quando este workstream ainda vivia no repo `expand` (migrado para aqui a 20/07/2026). As decisões D1-D11 continuam válidas como registo da reunião; o plano operacional atualizado é o [plano-integracao.md](plano-integracao.md), e as perguntas Q1-Q10 foram entretanto refinadas nas 7 perguntas de [exploracao-bd.md](exploracao-bd.md) e formalizadas no docx de pedido à Expand Target.
+> **HISTÓRICO** — primeiro plano, escrito logo após a reunião de 16/07, quando este workstream ainda vivia no repo `expand` (migrado para aqui a 20/07/2026). As decisões D1-D11 continuam válidas como registo da reunião; o plano operacional atualizado é o [plano-integracao.md](../tecnico/plano-integracao.md), e as perguntas Q1-Q10 foram entretanto refinadas nas 7 perguntas de [exploracao-bd.md](../tecnico/exploracao-bd.md) e formalizadas no docx de pedido à Expand Target.
 >
 > Fonte: reunião com Vitor (Expand Target, agente PHC), Miguel Portugal e Jorge(s), 16/07/2026. Lead técnico da integração: António.
 

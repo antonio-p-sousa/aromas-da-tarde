@@ -24,7 +24,7 @@ A Expand Target gere por completo o PHC CS da Aromas da Tarde (implementação, 
 ## Ações
 
 - [x] Vitor cria utilizador `aroweb` e envia credenciais (e-mail 16–17 jul) — **falta host/porta do servidor**
-- [x] Vitor envia query de exemplo dos artigos (tabela `st`) — ver [sql/artigos.sql](../sql/artigos.sql)
+- [x] Vitor envia query de exemplo dos artigos (tabela `st`) — ver [sql/artigos.sql](../../sql/artigos.sql)
 - [ ] António: testar ligação e primeiras consultas (só SELECTs — BD real)
 - [ ] Vitor fornece mapeamento das restantes tabelas (clientes, encomendas) à medida que avançamos
 - [ ] Campos extra nos artigos (ex.: tipo de vidro da garrafa): Vitor consegue importar via Excel para campos livres do PHC se for preciso

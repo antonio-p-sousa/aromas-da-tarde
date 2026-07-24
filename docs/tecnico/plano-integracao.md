@@ -1,6 +1,6 @@
 # Plano de Integração PHC CS ↔ Shopify — Aromas da Tarde
 
-> Estado: **ligação validada** (20 jul 2026). Decisões base fixadas na [reunião de 16 jul](reuniao-2026-07-16-phc-expand.md).
+> Estado: **ligação validada** (20 jul 2026). Decisões base fixadas na [reunião de 16 jul](../reunioes/2026-07-16-reuniao-phc.md).
 
 ## Arquitetura
 
@@ -20,7 +20,7 @@ SQL Server PHC CS (servidor Expand Target, acesso externo)
 ## Fluxos
 
 ### 1. PHC → Shopify (diário)
-- **Artigos**: `st` com `inactivo=0 AND vaiwww=1` — ver [sql/artigos.sql](../sql/artigos.sql). Criar/atualizar produtos no Shopify.
+- **Artigos**: `st` com `inactivo=0 AND vaiwww=1` — ver [sql/artigos.sql](../../sql/artigos.sql). Criar/atualizar produtos no Shopify.
 - **Preços**: `epv1` + IVA (`taxasiva` via `st.tabiva`; atenção ao flag `IVA1INCL`). Só preço consumidor final.
 - **Stock**: quantidade disponível → inventory levels no Shopify. Aceite o risco de desfasamento intra-dia.
 - **Imagens**: existem no PHC; confirmar formato/acesso com o Vitor.
@@ -43,7 +43,7 @@ SQL Server PHC CS (servidor Expand Target, acesso externo)
 ## Estado da ligação (20 jul 2026)
 
 - ✅ Ligação validada: `213.63.232.121,8880` → `M2A3SRV01\SQLPHC`, SQL Server 2019 **Express** (limite 10 GB/BD — relevante se a Expand falar em upgrades). Host/porta no `.env`.
-- Consultas via [scripts/Invoke-PhcQuery.ps1](../scripts/Invoke-PhcQuery.ps1) (só aceita SELECTs; lê o `.env`).
+- Consultas via [scripts/Invoke-PhcQuery.ps1](../../scripts/Invoke-PhcQuery.ps1) (só aceita SELECTs; lê o `.env`).
 
 ### Raio-X dos artigos web (`inactivo=0 AND vaiwww=1`)
 

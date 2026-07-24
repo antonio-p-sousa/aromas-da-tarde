@@ -6,7 +6,7 @@
 
 | Tabela | Colunas | Papel (PHC CS standard) |
 |---|---|---|
-| `st` | 238 | Artigos (já mapeada — ver [sql/artigos.sql](../sql/artigos.sql)) |
+| `st` | 238 | Artigos (já mapeada — ver [sql/artigos.sql](../../sql/artigos.sql)) |
 | `cl` | 245 | Clientes — **1 633 registos** |
 | `bo` / `bo2` / `bo3` | 211/171/50 | Cabeçalhos de dossiers internos (encomendas) |
 | `bi` | 219 | Linhas de dossiers internos |
