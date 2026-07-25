@@ -3,6 +3,9 @@
 .env.*
 !.env.example
 
+# Correspondência do cliente (pode conter credenciais em claro)
+email-*.txt
+
 # Dados do cliente (exports da BD real) — não versionar
 data/
 
