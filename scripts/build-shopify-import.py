@@ -2,10 +2,13 @@
 # Regras (reunião 16+23 jul): preço = Preco_ComIVA; excluir preço 0;
 # esgotados NÃO aparecem (excluir stock<=0); tags novo/novidade/festivo;
 # Type = família; imagens vazias (a pedir ao parceiro que gere o PHC).
-import csv, re, unicodedata, io
+import csv, re, unicodedata, io, sys
 
-SRC = r"C:\Users\aport\OneDrive - theloop.pt\Desktop\Mental Palace\Trabalho\Projetos\Aromas da Tarde\aromas-da-tarde\data\catalogo-artigos-2026-07-20.csv"
-OUT = r"C:\Users\aport\OneDrive - theloop.pt\Desktop\Mental Palace\Trabalho\Projetos\Aromas da Tarde\aromas-da-tarde\data\shopify-import-aromas-2026-07-24.csv"
+# Uso: py build-shopify-import.py [catalogo_src.csv] [import_out.csv]
+_DEF_SRC = r"C:\Users\aport\OneDrive - theloop.pt\Desktop\Mental Palace\Trabalho\Projetos\Aromas da Tarde\aromas-da-tarde\data\catalogo-artigos-2026-07-25.csv"
+_DEF_OUT = r"C:\Users\aport\OneDrive - theloop.pt\Desktop\Mental Palace\Trabalho\Projetos\Aromas da Tarde\aromas-da-tarde\data\shopify-import-aromas-2026-07-25.csv"
+SRC = sys.argv[1] if len(sys.argv) > 1 else _DEF_SRC
+OUT = sys.argv[2] if len(sys.argv) > 2 else _DEF_OUT
 
 def slug(s):
     s = unicodedata.normalize("NFKD", s).encode("ascii", "ignore").decode()
