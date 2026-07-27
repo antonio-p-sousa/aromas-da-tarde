@@ -5,9 +5,29 @@ Guia de setup da loja Shopify **Aromas da Tarde** (`cbtddr-fc`) com o tema
 publicar). Pensado para o catálogo real: ~2 378 produtos, 25 famílias, preços
 com IVA, venda de bebidas alcoólicas.
 
-> Estado ao escrever: produtos importados; tema Various em **trial**; coleção
-> **Whisky** criada; restantes coleções por criar (ver ficheiro Matrixify).
 > Loja protegida por senha (pré-lançamento) — manter assim até ao go-live.
+
+---
+
+## ESTADO ATUAL (25 jul 2026) — hand-off
+
+**✅ Feito**
+- 2 378 produtos importados (ativos; `Type`=família; `Vendor`=Aromas da Tarde; stock).
+- **10 coleções** (smart, Tipo=família): Whisky, Gin, Rum, Licor, Vodka, Tequila, Cognac, Brandy, Aperitivos/Digestivos, Vinhos = **96% do catálogo** (2 273 produtos). Criadas via Matrixify (plano grátis limitou a 10).
+- **Menu principal**: Início + dropdown **Bebidas** com as 10 famílias ligadas às coleções.
+- **IVA**: caixa "incluir imposto no preço" ligada → sem dupla taxação.
+- **Age-gate (parcial)**: app Blockify instalada + **embed ativado no tema Horizon** ("On").
+
+**⏳ Falta (por ordem de prioridade)**
+1. **Criar o pop-up do age-gate** — ⚠️ o embed está on mas **não há pop-up** (lista 0/1) → o gate ainda não bloqueia. Ver runbook em §4. (O customizador da app não é operável por automação — fazer manualmente.)
+2. **Nome da loja**: ainda "My Store" → mudar para **"Aromas da Tarde"** em *Configurações → Dados da loja*.
+3. **Editor do tema Various**: homepage premium + confirmar mega-menu (§3).
+4. **Logótipo + imagens dos produtos** (cliente / parceiro PHC).
+5. **15 coleções pequenas** em falta (4% do catálogo) — opcional: manual ou plano pago Matrixify.
+6. **Publicar Various ($220) + ligar domínio + remover senha** → go-live.
+7. Quando publicar o Various, **reativar o embed do age-gate nesse tema**.
+
+> Nota técnica: a automação do assistente **não consegue operar de forma fiável o admin Shopify** (páginas pesadas congelam os screenshots); o padrão que funciona é **importações Matrixify** (feitas pelo António) + este guia. O age-embed foi ligado numa janela em que o browser respondeu.
 
 ---
 
@@ -87,11 +107,18 @@ O tema Various tem mega-menu nativo — associar cada coluna a uma coleção.
 
 ## 4. Verificação de idade (obrigatório — álcool)
 
-Instalar um **age gate** (verificação 18+) antes do go-live:
-- App gratuita de age verification (ex.: da Shopify App Store), ou o bloco
-  nativo se o Various o incluir.
-- Bloqueia o acesso à loja sem confirmação de idade — requisito legal para
-  venda de bebidas alcoólicas.
+App escolhida: **Blockify Age Verification** (instalada; embed já ativado no tema).
+**Falta criar o pop-up** (sem ele o gate não bloqueia). Na app → *Store
+verification* → **Create pop-up** (plano grátis: 1 pop-up):
+
+- **Nome interno:** `Aromas 18+`  ·  **Idade mínima:** `18`
+- **Título:** `Bem-vindo à Aromas da Tarde`
+- **Mensagem:** `Este site vende bebidas alcoólicas. Para entrar, confirme que tem 18 anos ou mais.`
+- **Botão confirmar:** `Tenho 18 anos ou mais`
+- **Botão recusar:** `Sou menor de 18`
+- **Mensagem ao recusar:** `Lamentamos, mas tem de ter 18 anos ou mais para aceder a este site.`
+- **Comportamento:** bloquear página inteira + memorizar a confirmação
+- **Estilo:** fundo escuro/sóbrio  ·  **Save/Activate** (fica 1/1) → testar em *Test the Popup*.
 
 ---
 
