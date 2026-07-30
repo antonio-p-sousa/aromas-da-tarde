@@ -61,10 +61,20 @@ locale pt-PT (primário=en); o Various traz 4034/4393 strings pt-PT de fábrica.
 
 ## 🟡 P3 — Retoques visuais (editor, 1 clique cada)
 
-- "Home page · 1 item" aparece em "As nossas categorias" (secção Lista de coleções → remover a coleção Home page da seleção)
+- ~~"Home page · 1 item"~~ ✅ RESOLVIDO 30 jul: coleção frontpage renomeada p/ "Destaques" + "items"→"artigos"
 - Barra de anúncio verde-garrafa (se preferires ink #16110B: secção Barra de anúncio → cores)
 - Tipografia títulos → Playfair Display (Configurações do tema → Tipografia) — dá o ar da demo
 - Estrelas "(0)" nos cartões/produto: se a app de reviews não for para usar já, desativar exibição de rating (Cartões de produto nas Configurações do tema)
+
+## ✅ Passe final 30 jul (2ª ronda API) — +348 traduções
+
+`tools/traduz-resto.js` (347) + retoques: **contas de cliente completas** (login/registo/recuperar
+palavra-passe/encomendas/moradas), pesquisa ("Sem resultados para..."), formulário de contacto,
+página de contacto demo (How can we help?/NY→PT neutro; morada/e-mail ficam p/ dados do cliente),
+página password ("Brevemente"), lista de coleções ("Coleções", "N artigos"), meses PT, acessibilidade
+(screen readers PT), gift cards, blogue, countdowns ("Por tempo limitado"), colunas "Free Shipping
+$99"→copy verdadeira, "Colecções"→"Coleções" (AO90), coleção "Home page"→"Destaques".
+**Total do dia: 472 traduções pt-PT via API.** Montra verificada: pesquisa/coleções/homepage/produto/carrinho.
 
 ## ✅ Verificado OK
 
