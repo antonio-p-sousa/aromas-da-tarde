@@ -62,6 +62,11 @@ locale pt-PT (primário=en); o Various traz 4034/4393 strings pt-PT de fábrica.
    Gotcha: as remoções só pegam com **Salvar**; verificar sempre no DOM (secções "removidas"
    podem ficar se o Salvar falhar).
 
+**30 jul (extra):** removida também a secção "Details with text" do TEMPLATE DE COLEÇÃO (banner
+verde c/ placeholder de imagem); FAQ mantida (perguntas reais PT). Verificado no DOM: coleção =
+banner + grelha + FAQ + descrição + rodapé. **Shopify Payments em preenchimento pelo António**
+(dados do cliente em email-30-07-26-dados-pagamento.txt, gitignored; logo do cliente em desenvolvimento).
+
 ## 🟢 Opcionais que sobram (cosmética, quando houver vontade)
 
 - Estrelas "(0)" nos cartões/página de produto (Configurações do tema → desligar rating até haver reviews)
