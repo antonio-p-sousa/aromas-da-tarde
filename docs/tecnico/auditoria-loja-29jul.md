@@ -32,24 +32,32 @@ Abrir: Personalizar → dropdown do template (topo) → **Produtos → Default p
 
 Depois: **Salvar**. (Manter: galeria, título/SKU/preço, quantidade+Add, sticky bar, related products se existir.)
 
-## 🟡 P2 — Strings EN por traduzir (Claude — via Translations API)
+## ✅ P2 — Strings EN traduzidas (30 jul, via Translations API) — FEITO
 
-Alvo (mapa completo em `scratchpad/mw/traduz-tema.js`):
-- "Sort by:" → "Ordenar por:" · "{{count}} products" → "produtos" · "Filter" → "Filtrar" (coleção)
-- "+ Add" → "+ Adicionar" (cartões de produto)
-- "Estimated delivery between X and Y" → "Entrega estimada entre X e Y" (produto)
-- "Estimate shipping" → "Estimar envio" + calculadora de envio (carrinho)
-- "Search results" → "Resultados da pesquisa" (pesquisa)
-- "All categories" → "Todas as categorias" · "What are you searching for?" → "O que procura?" (header)
+App re-autorizada pelo António (versão `placeholder-loop-4`, scopes translations/locales).
+**124 traduções pt-PT registadas e VERIFICADAS na montra:**
+- `tools/traduz-tema.js` (20): Ordenar por:/Filtrar/977 produtos/Todas as categorias/
+  Resultados da pesquisa/calculadora de envio do carrinho completa.
+- `tools/traduz-secoes.js` (104): **todo o conteúdo demo dos templates de produto e coleção
+  substituído por copy de garrafeira** — Key Features do peixe→"Porquê comprar na Aromas da Tarde",
+  Los Angeles→"Envio para todo o Portugal continental", Affirm→"Compra segura", 365 days→política
+  de devoluções, Authencity→"Autenticidade garantida", Shop By Dietary Need→"Explore por categoria",
+  FAQ do leite/café→FAQ reais de garrafeira (18+, embalagem, devoluções, entrega), acordeões PT,
+  "Também poderá gostar"/"Vistos recentemente", Read more→Ler mais (todos).
 
-**Estado 30 jul**: a UI "Conteúdo do tema" ficou não-automatizável (vive num iframe cross-origin
-`online-store-web.shopifyapps.com`; cliques sintéticos não são entregues de forma fiável — foi isto
-que fez os cliques de 29-30 jul falharem aleatoriamente). Caminho novo: **Translations API**.
-Lançada versão `placeholder-loop-4` da app com scopes `read/write_translations` + `read_locales`.
-**Falta 1 clique do António**: re-autorizar a app →
-`https://admin.shopify.com/store/cbtddr-fc/oauth/install?client_id=ffe1d672cb6a73acba9128ef6459f797`
-Depois: `node traduz-tema.js` (dry-run) e `node traduz-tema.js --write`.
-(Se a API não cobrir o locale primário, plano B: co-pilot de 5 min com o runbook textos-tema-pt.md.)
+**Descobertas técnicas:** o editor "Conteúdo do tema" vive num iframe cross-origin
+(`online-store-web.shopifyapps.com`) — cliques sintéticos não são fiáveis, NÃO usar. A Translations
+API não lista temas trial em `translatableResources`, mas **`translatableResourcesByIds` aceita o
+gid do Various diretamente** (locale content + json templates + section groups). A montra serve o
+locale pt-PT (primário=en); o Various traz 4034/4393 strings pt-PT de fábrica.
+
+## 🔴 P1 restante — só editor (settings, não strings; lista CURTA)
+
+1. Botão **"+ Add"** → "Adicionar" (setting do bloco buy buttons/cartões; default do schema, não traduzível por API)
+2. Placeholder pesquisa **"What are you searching for?"** → "O que procura?" (setting do header)
+3. Secção "Explore por categoria" no template de produto: escolher as ~10 coleções reais (mostra "Example collection") — ou apagar a secção
+4. Cartões "A nossa garrafeira/Ofertas/Conservação/Stock real" (template produto): imagens placeholder — pôr fotos ou apagar secção
+5. Secção "Prova e conservação" (ex-Nutritious): textos já PT mas as imagens são ingredientes de mercearia — apagar se incomodar
 
 ## 🟡 P3 — Retoques visuais (editor, 1 clique cada)
 

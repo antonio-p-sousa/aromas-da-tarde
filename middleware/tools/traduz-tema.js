@@ -1,12 +1,15 @@
-﻿// Traduz strings EN restantes do tema Various para pt-PT via Translations API.
-// Uso: node traduz-tema.js           (dry-run: mostra o que faria)
-//      node traduz-tema.js --write   (regista as traduções)
+// Traduz strings EN do tema Various para pt-PT via Translations API.
+// O tema trial não aparece em translatableResources(resourceType), mas
+// translatableResourcesByIds aceita o gid diretamente (validado 30 jul).
+// Uso: node tools/traduz-tema.js            (dry-run: matches + candidatas)
+//      node tools/traduz-tema.js --write    (regista as traduções pt-PT)
 const { shopify } = require('../src/env');
-const THEME_ID = 'gid://shopify/OnlineStoreTheme/193307574598';
+const LOCALE_CONTENT = 'gid://shopify/OnlineStoreThemeLocaleContent/193307574598';
 const LOCALE = 'pt-PT';
 const WRITE = process.argv.includes('--write');
+const BATCH = 25;
 
-// Mapa valor-EN (normalizado, minúsculas) → tradução PT.
+// Mapa valor-EN (normalizado) → tradução PT.
 const MAPA = new Map(Object.entries({
   'sort by:': 'Ordenar por:',
   'sort by': 'Ordenar por',
@@ -15,6 +18,9 @@ const MAPA = new Map(Object.entries({
   '{{ count }} products': '{{ count }} produtos',
   '{{ count }} product': '{{ count }} produto',
   '{{ product_count }} products': '{{ product_count }} produtos',
+  '{{ product_count }} of {{ count }} products': '{{ product_count }} de {{ count }} produtos',
+  '{{ product_count }} of {{ count }} product': '{{ product_count }} de {{ count }} produto',
+  'products': 'Produtos',
   'add': 'Adicionar',
   '+ add': '+ Adicionar',
   'search results': 'Resultados da pesquisa',
@@ -30,6 +36,8 @@ const MAPA = new Map(Object.entries({
   'estimated delivery between {{ start_date }} and {{ end_date }}': 'Entrega estimada entre {{ start_date }} e {{ end_date }}',
   'estimated delivery between {{ start_date }} and {{ end_date }}.': 'Entrega estimada entre {{ start_date }} e {{ end_date }}.',
 }));
+// Para o dry-run: padrões que apanham candidatas cujo formato exato não conhecemos.
+const CANDIDATAS = /sort by|filter|search result|all categorie|what are you search|estimated delivery|estimate shipping|^add$|products$/i;
 const norm = (s) => String(s).trim().toLowerCase();
 
 (async () => {
@@ -48,46 +56,49 @@ const norm = (s) => String(s).trim().toLowerCase();
     return d.data;
   };
 
-  const locales = await gql('{ shopLocales { locale primary published } }');
-  console.log('Locales da loja:', JSON.stringify(locales.shopLocales));
+  const d = await gql(
+    `query($ids:[ID!]!){ translatableResourcesByIds(resourceIds:$ids, first:1){
+        nodes{ resourceId
+          translatableContent{ key value digest }
+          translations(locale:"${LOCALE}"){ key value } } } }`,
+    { ids: [LOCALE_CONTENT] },
+  );
+  const node = d.translatableResourcesByIds.nodes[0];
+  if (!node) throw new Error('Recurso de locale content do Various não encontrado.');
+  const jaTraduzidas = new Map(node.translations.map((t) => [t.key, t.value]));
+  console.log(`${node.translatableContent.length} strings default; ${jaTraduzidas.size} já com tradução ${LOCALE}.`);
 
-  // Recursos de conteúdo de locale do tema (um por ficheiro de secção/grupo).
-  let cursor = null, alvos = [], total = 0;
-  do {
-    const d = await gql(
-      `query($c:String){ translatableResources(resourceType: ONLINE_STORE_THEME_LOCALE_CONTENT, first: 50, after: $c){
-          pageInfo{ hasNextPage endCursor }
-          nodes{ resourceId translatableContent{ key value digest locale } } } }`,
-      { c: cursor },
-    );
-    const page = d.translatableResources;
-    for (const node of page.nodes) {
-      if (!node.resourceId.includes('193307574598')) continue; // só o tema Various
-      for (const c of node.translatableContent) {
-        total++;
-        const tr = MAPA.get(norm(c.value));
-        if (tr) alvos.push({ resourceId: node.resourceId, key: c.key, en: c.value, pt: tr, digest: c.digest });
-      }
+  const alvos = [], candidatas = [];
+  for (const c of node.translatableContent) {
+    if (c.key.startsWith('shopify.checkout') || c.key.startsWith('shopify.sentence')) continue; // geridas pelo Shopify
+    const tr = MAPA.get(norm(c.value));
+    if (tr) {
+      if (jaTraduzidas.get(c.key) === tr) continue; // já está
+      alvos.push({ key: c.key, en: c.value, pt: tr, digest: c.digest });
+    } else if (!WRITE && CANDIDATAS.test(String(c.value).trim()) && String(c.value).length < 80) {
+      candidatas.push(c);
     }
-    cursor = page.pageInfo.hasNextPage ? page.pageInfo.endCursor : null;
-  } while (cursor);
+  }
 
-  console.log(`${total} strings percorridas; ${alvos.length} correspondem ao mapa:`);
+  console.log(`\n${alvos.length} matches do mapa:`);
   for (const a of alvos) console.log(`  · [${a.key}] "${a.en}" → "${a.pt}"`);
-
+  if (!WRITE && candidatas.length) {
+    console.log(`\n${candidatas.length} candidatas fora do mapa (rever formatos):`);
+    for (const c of candidatas.slice(0, 40)) console.log(`  ? [${c.key}] "${String(c.value).slice(0, 70)}"`);
+  }
   if (!WRITE) { console.log('\nDry-run. Correr com --write para registar.'); return; }
 
-  let ok = 0, err = 0;
-  for (const a of alvos) {
-    const d = await gql(
+  let ok = 0;
+  for (let i = 0; i < alvos.length; i += BATCH) {
+    const lote = alvos.slice(i, i + BATCH);
+    const res = await gql(
       `mutation($id:ID!,$tr:[TranslationInput!]!){ translationsRegister(resourceId:$id, translations:$tr){
-          userErrors{ field message } translations{ key locale } } }`,
-      { id: a.resourceId, tr: [{ key: a.key, value: a.pt, locale: LOCALE, translatableContentDigest: a.digest }] },
+          userErrors{ field message } translations{ key } } }`,
+      { id: LOCALE_CONTENT, tr: lote.map((a) => ({ key: a.key, value: a.pt, locale: LOCALE, translatableContentDigest: a.digest })) },
     );
-    const ue = d.translationsRegister.userErrors;
-    if (ue.length) { err++; console.log('  ✗', a.key, JSON.stringify(ue)); }
-    else { ok++; console.log('  ✓', a.key, '→', a.pt); }
+    const ue = res.translationsRegister.userErrors;
+    if (ue.length) console.log('  ✗ erros no lote:', JSON.stringify(ue));
+    ok += res.translationsRegister.translations.length;
   }
-  console.log(`\nRegistadas: ${ok} · Erros: ${err}`);
+  console.log(`\nRegistadas ${ok}/${alvos.length} traduções ${LOCALE}.`);
 })().catch((e) => { console.error('FALHOU:', e.message); process.exit(1); });
-
