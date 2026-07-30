@@ -78,7 +78,12 @@
   .badge.novo { background: var(--gold); color: #241c0c; }
   .badge.fest { background: #6d3550; color: #f6dce9; }
   .badge.out  { background: transparent; border: 1px solid var(--red); color: var(--red); }
-  .bottle { height: 118px; display: flex; align-items: flex-end; justify-content: center; }
+  .bottle { height: 148px; display: flex; align-items: flex-end; justify-content: center; }
+  .photo {
+    height: 148px; width: 100%; display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(180deg, #fdfaf3 0%, #efe6d2 100%); border-radius: .45rem;
+  }
+  .photo img { max-height: 136px; max-width: 92%; object-fit: contain; mix-blend-mode: multiply; }
   .fam { font-size: .62rem; letter-spacing: .3em; text-transform: uppercase; color: var(--gold); }
   .name { font-family: var(--serif); font-size: 1.06rem; line-height: 1.25; font-weight: 600; min-height: 2.6em; }
   .foot { margin-top: auto; display: flex; align-items: baseline; justify-content: space-between; gap: .5rem; border-top: 1px solid var(--line); padding-top: .7rem; }
@@ -107,7 +112,7 @@
   <div>
     <h1>Os grandes destilados<br>do mundo, <em>à distância<br>de um clique</em>.</h1>
     <p>Pré-visualização da futura loja online — construída com o catálogo real do PHC:
-    referências, famílias e preços com IVA tal como estão hoje no sistema de gestão.</p>
+    referências, famílias, preços com IVA e fotografias, tal como estão hoje no sistema de gestão.</p>
   </div>
   <div class="stats">
     <div class="stat"><b id="st-prod">—</b><span>Produtos</span></div>
@@ -122,8 +127,8 @@
 <button class="more" id="more" hidden>Mostrar mais</button>
 
 <footer>
-  <div><b>DEMO TÉCNICA · LOOP FUTURE</b> — dados reais extraídos do PHC CS em 20 jul 2026</div>
-  <div>Imagens dos produtos: a integrar (acesso aos ficheiros em curso junto da Expand Target)</div>
+  <div><b>PRÉ-VISUALIZAÇÃO · LOOP FUTURE</b> — catálogo, preços c/ IVA e fotografias reais, sincronizados do PHC CS (29 jul 2026)</div>
+  <div>Beba com moderação · Venda proibida a menores de 18 anos</div>
 </footer>
 
 <script src="products.js"></script>
@@ -163,7 +168,7 @@
     const l = [...list];
     if (sort === 'price-asc') l.sort((a, b) => a.p - b.p);
     else if (sort === 'price-desc') l.sort((a, b) => b.p - a.p);
-    else l.sort((a, b) => a.n.localeCompare(b.n, 'pt'));
+    else l.sort((a, b) => (!!b.img - !!a.img) || a.n.localeCompare(b.n, 'pt')); // fotos primeiro
     return l;
   }
   const eur = v => v.toLocaleString('pt-PT', { style: 'currency', currency: 'EUR' });
@@ -181,7 +186,9 @@
           ${p.fest ? '<span class="badge fest">Festivo</span>' : ''}
           ${p.s <= 0 ? '<span class="badge out">Esgotado</span>' : ''}
         </div>
-        <div class="bottle">${bottleSvg(p)}</div>
+        ${p.img
+          ? `<div class="photo"><img src="${p.img}" alt="${p.n.replace(/"/g, '&quot;')}" loading="lazy"${p.s <= 0 ? ' style="opacity:.45"' : ''}></div>`
+          : `<div class="bottle">${bottleSvg(p)}</div>`}
         <div class="fam">${p.f}${p.c && p.c !== p.f ? ' · ' + p.c : ''}</div>
         <h3 class="name">${p.n}</h3>
         <div class="foot">
