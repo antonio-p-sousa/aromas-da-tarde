@@ -1,0 +1,19 @@
+{
+  "name": "aromas-middleware",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Middleware de sincronização PHC -> loja Shopify (Aromas da Tarde). Fase atual: dry-run só de leitura.",
+  "type": "commonjs",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "dry-run": "node src/dry-run.js",
+    "sync": "node src/sync.js",
+    "imagens": "node tools/carrega-imagens.js",
+    "extrai-imagens": "node tools/extrai-imagens.js",
+    "test": "node --test",
+    "test:phc": "node -e \"require('./src/phc').fetchArticles().then(a=>{console.log('PHC OK:',a.length,'artigos');process.exit(0)}).catch(e=>{console.error(e.message);process.exit(1)})\""
+  },
+  "dependencies": {
+    "mssql": "^11.0.0"
+  }
+}
