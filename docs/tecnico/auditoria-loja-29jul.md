@@ -51,13 +51,23 @@ API não lista temas trial em `translatableResources`, mas **`translatableResour
 gid do Various diretamente** (locale content + json templates + section groups). A montra serve o
 locale pt-PT (primário=en); o Various traz 4034/4393 strings pt-PT de fábrica.
 
-## 🔴 P1 restante — só editor (settings, não strings; lista CURTA)
+## ✅ P1 editor — CONCLUÍDO 30 jul (co-pilot António+Claude)
 
-1. Botão **"+ Add"** → "Adicionar" (setting do bloco buy buttons/cartões; default do schema, não traduzível por API)
-2. Placeholder pesquisa **"What are you searching for?"** → "O que procura?" (setting do header)
-3. Secção "Explore por categoria" no template de produto: escolher as ~10 coleções reais (mostra "Example collection") — ou apagar a secção
-4. Cartões "A nossa garrafeira/Ofertas/Conservação/Stock real" (template produto): imagens placeholder — pôr fotos ou apagar secção
-5. Secção "Prova e conservação" (ex-Nutritious): textos já PT mas as imagens são ingredientes de mercearia — apagar se incomodar
+1. ✅ Botão "+ Add" → **"Adicionar"** (setting global, Configurações do tema)
+2. ✅ Placeholder pesquisa → **"O que procura?"**
+3-5. ✅ Template de produto: **removidas** as secções Lista de coleções (Example collection),
+   Details with text (cartões cinzentos), Componentes do produto (amendoins) e Detalhes do
+   produto (pão/hotspots + tabela Example Co.). Resta: produto + recomendações + vistos
+   recentemente. Verificado no DOM da montra (só header/main/recommendations/footer).
+   Gotcha: as remoções só pegam com **Salvar**; verificar sempre no DOM (secções "removidas"
+   podem ficar se o Salvar falhar).
+
+## 🟢 Opcionais que sobram (cosmética, quando houver vontade)
+
+- Estrelas "(0)" nos cartões/página de produto (Configurações do tema → desligar rating até haver reviews)
+- Barra de anúncio: cor ink #16110B se preferirem ao verde-garrafa
+- Tipografia títulos → Playfair Display (look da demo HTML)
+- Página Contactos: criar com dados reais do cliente (template já traduzido)
 
 ## 🟡 P3 — Retoques visuais (editor, 1 clique cada)
 
