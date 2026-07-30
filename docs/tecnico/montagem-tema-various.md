@@ -9,25 +9,59 @@ com IVA, venda de bebidas alcoólicas.
 
 ---
 
-## ESTADO ATUAL (25 jul 2026) — hand-off
+## ESTADO ATUAL (27 jul 2026) — hand-off
 
 **✅ Feito**
 - 2 378 produtos importados (ativos; `Type`=família; `Vendor`=Aromas da Tarde; stock).
-- **10 coleções** (smart, Tipo=família): Whisky, Gin, Rum, Licor, Vodka, Tequila, Cognac, Brandy, Aperitivos/Digestivos, Vinhos = **96% do catálogo** (2 273 produtos). Criadas via Matrixify (plano grátis limitou a 10).
-- **Menu principal**: Início + dropdown **Bebidas** com as 10 famílias ligadas às coleções.
+- **11 coleções** (smart, Tipo=família): Whisky (977), Gin (371), Rum (261), Licor (194), Vodka (172), Tequila (142), Apert./Degestivos (49), Cognac (44), Brandy (34), Vinhos (29), Porto (20) = **~97% do catálogo**. Criadas via Matrixify (plano grátis limitou a ~10-11).
+- **Menu principal**: Início + dropdown **Bebidas** com as famílias ligadas às coleções.
 - **IVA**: caixa "incluir imposto no preço" ligada → sem dupla taxação.
-- **Age-gate (parcial)**: app Blockify instalada + **embed ativado no tema Horizon** ("On").
+- **Nome da loja**: "Aromas da Tarde" (feito).
+- **Age-gate**: app Blockify instalada, embed ativado + **pop-up 18+ criado e ativo** (feito).
+- **Tema Various**: instalado (em avaliação/trial).
+- **Homepage — hero (27 jul)**: apagados os **4 slides de mercearia** ("Super Groceries", "Fruits & Vegetables", "Power up every morning", "Nutrition for Growing Families"); resta **1 slide PT** ("Os grandes [destilados] do mundo"). Gravado.
+- **Homepage — barra de anúncio (27 jul)**: os 4 anúncios traduzidos para PT e sem £/promos falsas: "As grandes marcas de whisky, gin, rum e vinhos" · "Beba com moderação · Venda proibida a menores de 18 anos" (substituiu o contador) · "Envio para todo o Portugal continental" · "Compra segura e pagamento protegido". Botão "More" removido. Gravado.
+- **Cabeçalho — menu de topo (27 jul)**: apagados os **7 blocos demo** (Combo & Deals, Bundle save, Shop by Category, Fruit & Vegetables, Meat & Fish, Presets, Templates); a definição "Menu principal" ligada ao **Main menu** → o topo mostra agora **Início · Bebidas ▾**. Gravado.
+- **Menu lateral/drawer (27 jul)**: a definição "Menu lateral" ligada ao **Main menu**; título desktop e mobile = "Menu" (era "Drawer menu"); apagados os **9 blocos de mercearia** (Bakery…Baby). Resta 1 bloco "Menu lateral" vazio (inofensivo, não renderiza). Gravado.
+- **Homepage — "Coleções em destaque" (27 jul)**: título "Hot Deals"→**"Explore por categoria"**, botão "View All"→**"Ver tudo"**, e os 3 blocos de coleção repontados para **Whisky · Gin · Rum** (coleções reais). A secção mostra agora produtos reais com preços (ex.: Yamazaki 12 Yrs €271,71). Gravado. *(Ainda tem um contador "Gone in 24 Hours" — desativar nas definições da secção; não feito.)*
+- **Etiquetas/badges de produto (27 jul)**: apagados os **4 badges falsos** ("2 for $41", "Highly rated", "Best Buy", "Deal") que apareciam em todos os produtos; mantidos "Etiqueta de promoção" e "Etiqueta de esgotado" (legítimos). Gravado.
+- **Homepage — "Lista de coleções" / "As nossas categorias" (27 jul)**: título "Shop Categories"→**"As nossas categorias"**, botão "All Collections"→**"Ver todas"**, e apagados os 12 blocos de coleção demo → a secção mostra agora **todas as 11 coleções reais** com contagens (Whisky 977, Gin 371, Rum 261, Licor 194, Vodka 172, Tequila 142, Apert./Deg 49, Cognac 44, Brandy 34, Vinhos 29, Porto 20 + Home page). Gravado.
+- **Homepage — limpeza do corpo (27 jul)**: apagadas **~10 secções demo de mercearia**: Promoção com rolagem (carrossel vazio), Image with text (Kitchen Essentials), Collection-group (9 for $18/Half Price), Product showcase (dairy combo/Non-GMO), Grade de promoção x2 (Earn Cashback / Save 35% All Groceries), Lista de coleções 2ª (Shop By Dietary Need), Coleções promocionais (Fresh Picks/Premium Meat), Colunas de texto com ícones (selos em inglês — não traduzíveis por automação), Collection list-group (Shop conveniently in supermarket), Image with text 2ª (Healthy Living/organic), Conjunto de produtos destacados (Fresh Ingredients), Stats counter (More than groceries/+84), Popular Companies (Handcrafted cookie…). **Corpo final: Hero → As nossas categorias → Explore por categoria → Space.** Gravado.
+- **Rodapé (27 jul)**: "This is everything you need in your pantry"→**"Aromas da Tarde"** (campo "Store name" limpo → mostra o nome da loja); newsletter "Join our newsletter"→**"Subscreva a nossa newsletter"** + subtítulo inglês limpo; **contactos FALSOS removidos** (telefone +84 Vietname, morada NY, support@example.com — limpo o bloco "Texto personalizado" para o cliente meter os reais); apagadas as **3 colunas de menu vazias** (Company/Popular Categories/Help and support — sem links). Rodapé final: newsletter PT + (contacto a preencher) + "Aromas da Tarde" + sub-rodapé (ícones de pagamento + © Aromas da Tarde). Gravado.
+  - **Truque técnico descoberto**: campos **rich-text** podem ser **LIMPOS** com segurança (`Ctrl+A` + tecla `Delete`) — só *escrever letras* é que dispara o bug dos atalhos. Assim removeram-se os textos demo em inglês do rodapé **e a legenda inglesa do hero** ("Fresh ingredients loved by thousands of families").
+- **Contador "Gone in 24 Hours" (27 jul)**: desativado na secção "Explore por categoria" (definições → Contador regressivo → "Habilitar contador regressivo" OFF). Gravado.
+- **Placeholder de produto p/ vídeo do cliente (28 jul)**: gerado um placeholder de marca (`scratchpad/placeholder-produto.png` — ícone de câmara + "Fotografia do produto · a aguardar imagem · AROMAS DA TARDE", via `sharp`) e **aplicado como imagem a TODOS os produtos sem foto** via Admin API. Objetivo: vídeo para pressionar o cliente a enviar as fotos reais.
+  - **Como se fez o acesso à API** (Shopify "Primavera '26" já não tem o token de custom app clássico): criada app privada **"Placeholder Loop"** no **Dev Dashboard** (escopos `read/write_products, read/write_files`), lançada versão, **instalada na loja** (via `/admin/oauth/authorize`), e token obtido pelo grant **`client_credentials`** (`POST /admin/oauth/access_token`, token ~24h). Credenciais no `.env`: `SHOPIFY_APP_CLIENT_ID` / `SHOPIFY_APP_CLIENT_SECRET`.
+  - Script: `scratchpad/apply-placeholder.js` (staged upload → `fileCreate` → CDN url → `productCreateMedia` por produto, idempotente: salta produtos que já têm imagem). Reutilizável.
+  - **Referência p/ o vídeo**: screenshots dos concorrentes Garrafeira Soares (grelha Whisky) e Garrafeira Nacional (grelha com fotos em fundo branco) — tirados só como comparação, **não** carregados na loja (evitar direitos de autor de concorrentes).
+  - ⚠️ **Quando chegarem as fotos reais**: substituir os placeholders. A app "Placeholder Loop" pode ser **desinstalada** depois se não for precisa.
+- **Idioma da loja → Português (27 jul)**: em *Configurações → Idiomas* adicionado **Português (Portugal)**, instalada a app oficial **Shopify Translate & Adapt**, o idioma **publicado** e **definido como padrão do domínio** (cbtddr-fc.myshopify.com → PT na raiz, EN em /en) e atribuído ao **mercado Portugal**. Verificado no preview: menus (Início/Bebidas), "Produtos", **age-gate** e **banner de cookies** aparecem em **PT**; nomes de produtos mantidos no original (não traduzidos — correto).
+  - ⚠️ **Idioma primário da loja = Inglês** e é **imutável** (fixado na criação) — por isso adicionou-se PT como idioma publicado + padrão do domínio (é o método suportado).
+  - **Ficou "Sem traduções" de conteúdo** (não se correu tradução automática de propósito, para **não estragar os ~2378 nomes de produtos/marcas**). Alguns textos específicos do tema ("View all", "Welcome to our store", placeholder da pesquisa) podem ficar em inglês se o locale pt-PT do tema não os cobrir → afinar com a app **Translate & Adapt** por categoria (traduzir "Tema", **nunca** "Produtos").
+  - ⚠️ **O preview mostrou o tema HORIZON** (tema publicado atual): o **Various está em avaliação/trial**, logo todas as edições de homepage/rodapé acima só ficam live quando o **Various for publicado ($220)**.
 
 **⏳ Falta (por ordem de prioridade)**
-1. **Criar o pop-up do age-gate** — ⚠️ o embed está on mas **não há pop-up** (lista 0/1) → o gate ainda não bloqueia. Ver runbook em §4. (O customizador da app não é operável por automação — fazer manualmente.)
-2. **Nome da loja**: ainda "My Store" → mudar para **"Aromas da Tarde"** em *Configurações → Dados da loja*.
-3. **Editor do tema Various**: homepage premium + confirmar mega-menu (§3).
+1. **Homepage — legenda do hero em inglês**: o slide PT ainda tem a linha "Fresh ingredients loved by thousands of families" no campo **Texto** (rich-text). ⚠️ *Este campo rich-text não é editável de forma fiável por automação* (o foco escapa e os toques viram atalhos do admin) → **editar manualmente** no editor: selecionar o slide → campo "Texto" → apagar e escrever PT.
+2. **Textos de sistema em inglês** (placeholder da pesquisa "What are you searching for?", "All categories") — são strings de **idioma/locale** do tema, não do editor de secções → editar em *Loja virtual → Temas → … → Editar idiomas* (traduções). Automação não testada aqui.
+3. **Idioma → PT: FEITO** (ver Feito). Sobre os textos de UI residuais em inglês ("View all", "Welcome to our store", placeholder da pesquisa) — **investigado na Translate & Adapt (27 jul)**:
+   - A Translate & Adapt **não tem categoria "Tema"** para estas strings; ela gere **conteúdo** (Produtos, Coleções, Páginas, Políticas, Menu, Banner de cookies, Metacampos). Os "Metadados da loja" ali são **metacampos** (config do Blockify age-gate, já em PT).
+   - O **"Traduzir automaticamente" é tudo-ou-nada** → traduziria também os **Produtos** (mangaria os ~2378 nomes/marcas: "Woodford Reserve", "Yamazaki"…). **Não corri** — decisão deliberada.
+   - As strings de UI puras ("View all", pesquisa, "Add to cart") são **locale do tema** (ficheiro `pt.json` de cada tema), não conteúdo. **Solução**: (a) o **Various**, ao ser publicado, traz o seu próprio `pt.json` e traduz a maioria automaticamente; (b) o que sobrar afina-se no editor do tema Various via **"Localizar"** por secção (ou *Editar idiomas* do Various) — **nunca no Horizon** (que não vai ser o tema final). Fazer **depois de publicar o Various**.
+   - Se algum dia quiserem traduzir descrições de produtos para PT, fazer **por categoria** na Translate & Adapt (Produtos), revendo os nomes de marca — nunca o "Traduzir automaticamente" global.
+4. **Rodapé** — limpo (ver Feito). Falta só, quando houver dados/páginas:
+   - **Contacto real**: meter telefone/morada/email/horário da Aromas da Tarde no bloco "Texto personalizado" (está vazio, à espera dos dados do cliente).
+   - **Menus de rodapé** (opcional): criar em *Conteúdo → Menus* colunas com páginas legais (Política de Privacidade, Envios, Devoluções, Termos, Sobre) e voltar a adicionar blocos "Menu" ao rodapé. Precisa das páginas criadas primeiro.
 4. **Logótipo + imagens dos produtos** (cliente / parceiro PHC).
-5. **15 coleções pequenas** em falta (4% do catálogo) — opcional: manual ou plano pago Matrixify.
+5. **Coleções pequenas** restantes (~3% do catálogo) — opcional: manual ou plano pago Matrixify.
 6. **Publicar Various ($220) + ligar domínio + remover senha** → go-live.
 7. Quando publicar o Various, **reativar o embed do age-gate nesse tema**.
 
-> Nota técnica: a automação do assistente **não consegue operar de forma fiável o admin Shopify** (páginas pesadas congelam os screenshots); o padrão que funciona é **importações Matrixify** (feitas pelo António) + este guia. O age-embed foi ligado numa janela em que o browser respondeu.
+> Dica reutilizável: várias secções do tema (Cabeçalho, Menu lateral, e provavelmente as secções de coleções) têm um **seletor de menu/coleção**. Em vez de reconstruir blocos demo, **repontar o seletor** para o nosso Main menu / coleções reais e apagar os blocos demo pelo ícone de lixo (com hover). Foi assim que se limpou o topo e o drawer.
+
+> Nota técnica (automação Shopify, atualizada 27 jul):
+> - **Funciona:** apagar blocos/slides via ícone de lixo (com hover primeiro); editar **campos de texto simples** (Subtítulo, Título, Texto de anúncio, rótulos de botão) com o método clicar → focar → `Ctrl+A` → escrever.
+> - **Não funciona:** campos **rich-text** (o foco escapa → toques viram atalhos → navega para "Criar desconto"/"Usuários"); iframes de apps; e o **Edge adormece o separador** se não estiver ativo (manter a tab do editor em foco).
+> - O `browser_batch` executou no separador errado (Coleções) — usar chamadas individuais com `tabId` explícito.
 
 ---
 
