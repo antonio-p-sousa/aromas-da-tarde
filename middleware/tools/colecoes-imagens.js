@@ -1,6 +1,6 @@
-// Atribui imagem de capa a cada coleção: usa a foto do produto MAIS VENDIDO/1º da coleção.
+﻿// Atribui imagem de capa a cada coleção: usa a foto do produto MAIS VENDIDO/1º da coleção.
 // Idempotente: salta coleções que já têm imagem (a menos que FORCE=1).
-const { shopify } = require('./src/env');
+const { shopify } = require('../src/env');
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function getToken() {
@@ -53,3 +53,4 @@ async function gql(token, query, variables) {
   }
   console.log('FIM');
 })().catch((e) => { console.error('FATAL', e.message); process.exit(1); });
+
