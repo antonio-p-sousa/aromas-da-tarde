@@ -40,3 +40,23 @@ A parte KULTU está resumida no fim; detalhe segue no projeto respetivo.
 - Termos/políticas: Loop envia sugestões, cliente aprova
 - Pagamentos: Miguel configura (dados sensíveis = cliente)
 - Miguel revê tudo na **quinta-feira** (indisponível amanhã)
+
+## Execução (28 ago 2026)
+
+Aplicado na loja e gravado no tema Various (trial):
+
+1. **Grelha de categorias**: 8 colunas, cartões só com nome (CSS da secção:
+   `.card-collection__media{display:none} [class*="pb-["]{padding-bottom:0}`). Ordem alfabética já vinha das coleções.
+2. **Localização da loja**: bloco "FIREDRINKS — Santo Tirso" com Rua dos Pregos 92, Z.I. Poupa II,
+   4780-491 Santo Tirso, +351 252 858 547, Seg–Sex 9:00–18:00, botão "Como chegar" (abre Google Maps).
+   Removidos 2 dos blocos demo "Store branch" (Nova Iorque).
+3. **Hero/carrossel**: 2.º slide adicionado — "Whisky & Gin em destaque" com imagem 2-up
+   (design/firedrinks-slide-duplo.png, Aberfeldy 12 + Adamus lado a lado), CTA "Ver categorias" → /collections.
+   Autoplay 5 s, setas e paginação ativos. Manual: docs/loja/manual-banner-carrossel.md.
+4. **Portes por peso**: já concluído a 27 ago (2378 produtos a 1,4 kg; zona Portugal com 7 escalões 20→47 €,
+   3-5 dias úteis; tarifa default €5.99 apagada). Zonas Europa/Resto aguardam lista de países do Jorge.
+5. **Alt text** dos ficheiros firedrinks-* corrigido por API (tools/corrige-alts.js).
+
+Pendente (bloqueado por janela do browser minimizada durante a sessão): remover os 3 blocos demo
+"Store branch" restantes no overlay Localizador de lojas e traduzir "Select store"→"Selecionar loja"
+(2 min no editor). Pendentes externos: Payments (cliente), DNS (Miguel), compra do tema $220, países Europa.
