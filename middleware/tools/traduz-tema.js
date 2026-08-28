@@ -35,6 +35,9 @@ const MAPA = new Map(Object.entries({
   'please use estimate shipping for more details.': 'Use "Estimar envio" para mais detalhes.',
   'estimated delivery between {{ start_date }} and {{ end_date }}': 'Entrega estimada entre {{ start_date }} e {{ end_date }}',
   'estimated delivery between {{ start_date }} and {{ end_date }}.': 'Entrega estimada entre {{ start_date }} e {{ end_date }}.',
+  'choose your location': 'Escolha a sua loja',
+  'select store': 'Selecionar loja',
+  'get directions': 'Como chegar',
 }));
 // Para o dry-run: padrões que apanham candidatas cujo formato exato não conhecemos.
 const CANDIDATAS = /sort by|filter|search result|all categorie|what are you search|estimated delivery|estimate shipping|^add$|products$/i;
